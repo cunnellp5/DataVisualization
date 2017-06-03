@@ -22,15 +22,19 @@ var section = d3.selectAll('section')
     .html('42')
 
 // auto
+var x = d3.scaleLinear()
+    .domain([0, d3.max(data)])
+    .range([0, 420]);
+
 d3.select('.chart2')
   .selectAll('div')
     .data(data)
   .enter().append('div')
     .style('width',
-    function(data) {
-        return data * 10 + 'px';
+    function (d) {
+        return x(d) + 'px';
     })
     .text(
-      function(data) {
-        return data;
+      function (d) {
+        return d;
       });
