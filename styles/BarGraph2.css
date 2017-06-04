@@ -1,0 +1,17 @@
+.chart1 rect {
+  fill: steelblue;
+}
+.chart1 text {
+  fill: white;
+  font: 10px sans-serif;
+  text-anchor: end;
+}
+
+.chart2 rect {
+  fill: steelblue;
+}
+.chart2 text {
+  fill: white;
+  font: 10px sans-serif;
+  text-anchor: end;
+}
