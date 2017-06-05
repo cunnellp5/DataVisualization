@@ -96,8 +96,7 @@ function type(d) {
 
 (function() {
   'use strict';
-
-var margin = {top: 20, right: 30, bottom: 30, left: 40},
+var margin = {top: 40, right: 30, bottom: 60, left: 40},
     width = 960 - margin.left - margin.right,
     height = 500 - margin.top - margin.bottom;
 
@@ -112,7 +111,8 @@ var y = d3.scaleLinear()
       .scale(x);
 
   var yAxis = d3.axisLeft()
-      .scale(y);
+      .scale(y)
+      .ticks(10, '%')
 
 var chart = d3.select('.chart3')
     .attr('width', width + margin.left + margin.right)
@@ -125,13 +125,30 @@ d3.tsv('../views/data.tsv', type, function(error, data) {
   y.domain([0, d3.max(data, function(d) { return d.value; })]);
 
   chart.append('g')
-    .attr('class', 'x axis')
-    .attr('transform', 'translate(0,' + height + ')')
-    .call(xAxis);
+      .attr('class', 'x axis')
+      .attr('transform', 'translate(0,' + height + ')')
+      .call(xAxis)
 
+  chart.append("g")
+      .attr("class", "y axis")
+      .call(yAxis)
+// y label
   chart.append('g')
-    .attr('class', 'y axis')
-    .call(yAxis);
+    .append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 6)
+      .attr("dy", ".71em")
+      .style("text-anchor", "end")
+      .text("Values");
+// x label
+  chart.append('g')
+    .append("text")
+      .attr("x", 10)
+      .attr("y", 440)
+      // .attr("dy", "3.71em")
+      .style("text-anchor", "end")
+      .text("Names");
+
 
   chart.selectAll('.bar')
       .data(data)
@@ -146,5 +163,4 @@ function type(d) {
   d.value = +d.value;
   return d;
 }
-
 }());
