@@ -124,14 +124,21 @@ d3.tsv('../views/data.tsv', type, function(error, data) {
   x.domain(data.map(function(d) { return d.name; }))
   y.domain([0, d3.max(data, function(d) { return d.value; })]);
 
+  var t = d3.transition()
+  .duration(1000)
+  .ease(d3.easeLinear);
+
   chart.append('g')
       .attr('class', 'x axis')
       .attr('transform', 'translate(0,' + height + ')')
       .call(xAxis)
+      .transition(t)
+      .style('fill', 'green')
 
   chart.append("g")
       .attr("class", "y axis")
       .call(yAxis)
+
 // y label
   chart.append('g')
     .append("text")
@@ -150,13 +157,18 @@ d3.tsv('../views/data.tsv', type, function(error, data) {
       .text("Names");
 
 
-  chart.selectAll('.bar')
-      .data(data)
-    .enter().append('rect')
-      .attr('x', function(d) { return x(d.name); })
-      .attr('y', function(d) { return y(d.value); })
-      .attr('height', function(d) { return height - y(d.value); })
-      .attr('width', x.bandwidth());
+var rotate = d3.transition()
+    .duration(1000)
+    .ease(d3.easeLinear);
+
+chart.selectAll('.bar')
+    .data(data)
+  .enter().append('rect')
+    .attr('y', function(d) { return y(d.value); })
+
+    .attr('x', function(d) { return x(d.name); })
+    .attr('height', function(d) { return height - y(d.value); })
+    .attr('width', x.bandwidth())
 })
 
 function type(d) {
