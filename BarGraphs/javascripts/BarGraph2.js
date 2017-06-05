@@ -50,7 +50,7 @@ d3.tsv("data.tsv", type, function(error, data) {
 var bar = chart.selectAll("g")
       .data(data)
     .enter().append("g")
-      .attr("transform", function(d, i) { 
+      .attr("transform", function(d, i) {
         return "translate(0," + i * barHeight + ")";
       });
 
